@@ -2,8 +2,8 @@ import requests, json
 
 data = [{"Nome": "Álvaro da Silva"}, {"Nome": "Fátima Santos"}, {"Nome": "Pedro Nogueira"}]
 
-SPLUNK_SERVER = "YOUR SPLUNK SERVER"
-SPLUNK_TOKEN = "YOUR TOKEN"
+SPLUNK_SERVER = ""
+SPLUNK_TOKEN = ""
 SPLUNK_ENDPOINT = "http://{}:8088/services/collector".format(SPLUNK_SERVER)
 
 
@@ -12,14 +12,15 @@ def send_hec(data):
     for event in data:
         event_data = {'event': event,
                 'source': 'logLib',
-                'sourcetype': 'json',
+                'sourcetype': 'jsonpt',
                 'index': 'main'}
 
         data_payload.append(event_data)
 
     try:
+        headers = {"Content-Type": "application/json; charset=ISO-8859-1"}
         data_send = requests.post(SPLUNK_ENDPOINT, data=json.dumps(data_payload),
-                                  auth=('Splunk', SPLUNK_TOKEN))
+                                  auth=('Splunk', SPLUNK_TOKEN), headers=headers)
         response = data_send.json()
     except requests.Timeout:
         print("TIMEOUT ERROR")
