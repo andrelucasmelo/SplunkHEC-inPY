@@ -4,7 +4,9 @@ data = [{"Nome": "Álvaro da Silva"}, {"Nome": "Fátima Santos"}, {"Nome": "Pedr
 
 SPLUNK_SERVER = ""
 SPLUNK_TOKEN = ""
-SPLUNK_ENDPOINT = "http://{}:8088/services/collector".format(SPLUNK_SERVER)
+SPLUNK_HEC_PORT = ""
+SPLUNK_HEC_PROTOCOL = ""
+SPLUNK_ENDPOINT = "{}://{}:{}/services/collector".format(SPLUNK_HEC_PROTOCOL, SPLUNK_SERVER, SPLUNK_HEC_PORT)
 
 
 def send_hec(data):
